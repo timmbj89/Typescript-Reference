@@ -13,3 +13,27 @@ const data = await http(
 );
 
 
+//SECOND FETCH EXAMPLE
+class Movie {
+  title: string;
+  id: number;
+  constructor(title: string, id: number) {
+    this.title = title;
+    this.id = id;
+  }
+}
+
+function formatMovie(movie: any): Movie {
+  return { title: movie.title, id: movie.id };
+}
+
+class MovieService {
+  getMovies(genre: string): Promise<Movie[]> {
+    return fetch(`https://www.movies.com/${genre}`)
+        .then(res => res.json())
+        .then(res => res.map((movie: any) => formatMovie(movie))
+  }
+}
+const apiClient = new MovieService();
+//log list of movies
+apiClient.getMovies('sci-fi').then(movies => console.log(movies));
